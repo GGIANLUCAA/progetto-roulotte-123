@@ -19,17 +19,88 @@
     <div class="container">
         <h1>Dashboard Amministrazione</h1>
         <div class="actions">
-            <button id="add-new">Aggiungi Nuova Roulotte</button>
+            <button id="add-new-btn">Aggiungi Nuova Roulotte</button>
         </div>
+
+        <!-- Modulo per aggiungere una nuova roulotte (nascosto di default) -->
+        <div id="add-form-container" style="display:none; margin-bottom: 30px;">
+            <h2>Aggiungi Nuova Roulotte</h2>
+            <form id="add-form">
+                <input type="text" id="marca" placeholder="Marca" required><br><br>
+                <input type="text" id="modello" placeholder="Modello" required><br><br>
+                <input type="number" id="anno" placeholder="Anno" required><br><br>
+                <input type="number" id="prezzo" placeholder="Prezzo" required><br><br>
+                <textarea id="descrizione" placeholder="Descrizione" required></textarea><br><br>
+                <button type="submit">Salva Roulotte</button>
+            </form>
+        </div>
+
+        <h2>Elenco Roulotte</h2>
         <ul class="roulotte-list" id="roulotte-list">
             <!-- Le roulotte verranno caricate qui dinamicamente -->
         </ul>
     </div>
+
     <script>
-        // Logica per caricare e gestire le roulotte da implementare
-        document.getElementById('add-new').addEventListener('click', () => {
-            alert('Logica per aggiungere una nuova roulotte non ancora implementata.');
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            window.location.href = '/admin.html'; // Se non c'è token, torna al login
+        }
+
+        const headers = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' };
+
+        async function caricaRoulotte() {
+            const list = document.getElementById('roulotte-list');
+            list.innerHTML = ''; // Pulisce la lista
+            try {
+                const response = await fetch('/api/roulottes', { headers });
+                if (response.status === 401) window.location.href = '/admin.html';
+                const roulottes = await response.json();
+                roulottes.forEach(r => {
+                    const item = document.createElement('li');
+                    item.className = 'roulotte-item';
+                    item.innerHTML = `<span>${r.marca} ${r.modello} (${r.anno})</span> <button class="delete" data-id="${r.id}">Elimina</button>`;
+                    list.appendChild(item);
+                });
+            } catch (error) {
+                console.error("Errore nel caricamento delle roulotte:", error);
+            }
+        }
+
+        // Mostra/nasconde il modulo di aggiunta
+        document.getElementById('add-new-btn').addEventListener('click', () => {
+            const formContainer = document.getElementById('add-form-container');
+            formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
         });
+
+        // Gestione eliminazione
+        document.getElementById('roulotte-list').addEventListener('click', async (e) => {
+            if (e.target.classList.contains('delete')) {
+                const id = e.target.dataset.id;
+                if (confirm('Sei sicuro di voler eliminare questa roulotte?')) {
+                    await fetch(`/api/admin/roulottes/${id}`, { method: 'DELETE', headers });
+                    caricaRoulotte(); // Ricarica la lista
+                }
+            }
+        });
+
+        // Gestione aggiunta
+        document.getElementById('add-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nuovaRoulotte = {
+                marca: document.getElementById('marca').value,
+                modello: document.getElementById('modello').value,
+                anno: parseInt(document.getElementById('anno').value),
+                prezzo: parseFloat(document.getElementById('prezzo').value),
+                descrizione: document.getElementById('descrizione').value,
+            };
+            await fetch('/api/admin/roulottes', { method: 'POST', headers, body: JSON.stringify(nuovaRoulotte) });
+            document.getElementById('add-form').reset();
+            document.getElementById('add-form-container').style.display = 'none';
+            caricaRoulotte(); // Ricarica la lista
+        });
+
+        caricaRoulotte(); // Carica le roulotte all'avvio
     </script>
 </body>
 </html>
