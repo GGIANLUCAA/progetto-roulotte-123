@@ -1,0 +1,9 @@
+[
+  {
+    "id": "1",
+    "email": "superadmin@roulotte.pro",
+    "password": "$2b$10$Vhk8ldfKh3BbYXVlR8LJA.pp.z883mQI.9b6wRckoqb4McE24mJy.",
+    "role": "superadmin",
+    "name": "Super Admin"
+  }
+]

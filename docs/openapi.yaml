@@ -1,0 +1,932 @@
+openapi: 3.0.3
+info:
+  title: Roulotte Pro API
+  version: 0.1.0
+  description: API per gestione catalogo roulotte, AI vision, generazione testi, stima prezzo, PDF e vetrina pubblica.
+servers:
+  - url: https://api.roulottepro.example.com
+    description: Produzione
+  - url: http://localhost:3000
+    description: Sviluppo
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    UUID:
+      type: string
+      format: uuid
+    DateTime:
+      type: string
+      format: date-time
+    Roulotte:
+      type: object
+      required: [id, created_at, owner_id, marca, modello, anno, pubblico]
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        owner_id:
+          type: string
+        marca:
+          type: string
+        modello:
+          type: string
+        anno:
+          type: integer
+        dimensioni:
+          $ref: '#/components/schemas/Dimensioni'
+        peso:
+          $ref: '#/components/schemas/Peso'
+        stato_generale:
+          type: string
+          enum: [ottimo, buono, da_sistemare, da_rottamare]
+        documenti:
+          $ref: '#/components/schemas/Documenti'
+        componenti:
+          $ref: '#/components/schemas/Componenti'
+        impianti:
+          $ref: '#/components/schemas/Impianti'
+        finestre:
+          type: array
+          items:
+            $ref: '#/components/schemas/Finestra'
+        accessori:
+          type: array
+          items:
+            type: string
+        difetti:
+          type: array
+          items:
+            type: string
+        lavori:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lavoro'
+        foto:
+          type: array
+          items:
+            $ref: '#/components/schemas/Foto'
+        prezzo_richiesto:
+          type: number
+        prezzo_consigliato:
+          type: number
+        utilizzo_consigliato:
+          type: string
+        pubblico:
+          type: boolean
+        dettagli:
+          type: object
+          properties:
+            info_generali:
+              type: object
+              properties:
+                posti_letto:
+                  type: integer
+                targa:
+                  type: string
+                numero_telaio:
+                  type: string
+                stato_documenti:
+                  type: object
+                  properties:
+                    libretto_presente:
+                      type: boolean
+                    libretto_mancante:
+                      type: boolean
+                    libretto_smarrito:
+                      type: boolean
+                    demolizione:
+                      type: boolean
+                    solo_stanziale:
+                      type: boolean
+            carrozzeria_struttura:
+              type: object
+            impianti_dettaglio:
+              type: object
+            interni:
+              type: object
+            cucina:
+              type: object
+            bagno:
+              type: object
+            stato_generale:
+              type: object
+              properties:
+                valutazione:
+                  type: string
+                lavori_consigliati:
+                  type: string
+            prezzo_condizioni:
+              type: object
+              properties:
+                prezzo_richiesto:
+                  type: number
+                trattabile:
+                  type: boolean
+                disponibile_da:
+                  type: string
+                  format: date
+                trasporto:
+                  type: boolean
+    Dimensioni:
+      type: object
+      properties:
+        lunghezza:
+          type: string
+        larghezza:
+          type: string
+    Peso:
+      type: object
+      properties:
+        vuoto:
+          type: number
+        massimo:
+          type: number
+    Documenti:
+      type: object
+      properties:
+        libretto:
+          type: boolean
+        cert_gas:
+          type: boolean
+    Componenti:
+      type: object
+      additionalProperties:
+        type: string
+      properties:
+        cucina:
+          type: string
+        bagno:
+          type: string
+        sanitrit:
+          type: boolean
+        pavimento_rifatto:
+          type: boolean
+        stufa:
+          type: string
+        frigo:
+          type: string
+    Impianti:
+      type: object
+      properties:
+        elettrico:
+          type: string
+        acqua:
+          type: string
+        gas:
+          type: string
+    Finestra:
+      type: object
+      properties:
+        posizione:
+          type: string
+        stato:
+          type: string
+        oscurante:
+          type: boolean
+    Lavoro:
+      type: object
+      properties:
+        titolo:
+          type: string
+        data:
+          type: string
+          format: date
+        costo:
+          type: number
+    Foto:
+      type: object
+      required: [id, url]
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+          format: uri
+        categoria:
+          type: string
+          enum: [esterno, interno, cucina, bagno, pavimento, underbody, documento]
+        ai_tags:
+          type: array
+          items:
+            type: string
+        ai_raw:
+          type: object
+        bboxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BBox'
+    BBox:
+      type: object
+      properties:
+        label:
+          type: string
+        x:
+          type: number
+        y:
+          type: number
+        w:
+          type: number
+        h:
+          type: number
+    VisionResult:
+      type: object
+      properties:
+        categoria:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        bboxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BBox'
+        raw:
+          type: object
+    DescriptionRequest:
+      type: object
+      properties:
+        roulotte:
+          $ref: '#/components/schemas/Roulotte'
+        tone:
+          type: string
+          enum: [base, professionale, emozionale]
+        language:
+          type: string
+          enum: [IT, EN]
+    DescriptionResponse:
+      type: object
+      properties:
+        text:
+          type: string
+        variant:
+          type: string
+        version_id:
+          type: string
+    PriceEstimateRequest:
+      type: object
+      properties:
+        marca:
+          type: string
+        modello:
+          type: string
+        anno:
+          type: integer
+        stato_generale:
+          type: string
+        componenti:
+          $ref: '#/components/schemas/Componenti'
+        lavori:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lavoro'
+        prezzi_storici:
+          type: array
+          items:
+            type: number
+    PriceEstimateResponse:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+        prezzo_consigliato:
+          type: number
+        prezzo_ritiro:
+          type: number
+        motivi:
+          type: array
+          items:
+            type: string
+paths:
+  /api/auth/login:
+    post:
+      summary: Login utente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Token JWT
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  role:
+                    type: string
+                    enum: [admin, operator, viewer]
+        '401':
+          description: Credenziali non valide
+  /api/roulottes:
+    get:
+      summary: Lista roulotte
+      parameters:
+        - in: query
+          name: stato
+          schema:
+            type: string
+        - in: query
+          name: anno
+          schema:
+            type: integer
+        - in: query
+          name: bagno
+          schema:
+            type: string
+        - in: query
+          name: sanitrit
+          schema:
+            type: boolean
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: page_size
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Elenco roulotte
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Roulotte'
+    post:
+      summary: Crea roulotte
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Roulotte'
+      responses:
+        '201':
+          description: Creato
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Roulotte'
+  /api/roulottes/{id}:
+    get:
+      summary: Dettaglio roulotte
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dettaglio
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Roulotte'
+        '404':
+          description: Non trovato
+    put:
+      summary: Aggiorna roulotte
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Roulotte'
+      responses:
+        '200':
+          description: Aggiornato
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Roulotte'
+  /api/roulottes/{id}/photos:
+    post:
+      summary: Upload foto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                categoria:
+                  type: string
+      responses:
+        '201':
+          description: Foto caricata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foto'
+  /api/roulottes/{id}/lavori:
+    post:
+      summary: Aggiungi lavoro
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [titolo]
+              properties:
+                titolo:
+                  type: string
+                costo:
+                  type: number
+      responses:
+        '201':
+          description: Lavoro aggiunto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lavoro'
+  /api/roulottes/{id}/publish:
+    post:
+      summary: Pubblica scheda su vetrina
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pubblicata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+  /api/roulottes/{id}/descrizioni:
+    post:
+      summary: Salva variante descrizione
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [text]
+              properties:
+                text:
+                  type: string
+                variant:
+                  type: string
+      responses:
+        '201':
+          description: Versione salvata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+                  variant:
+                    type: string
+                  version_id:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+  /api/roulottes/{id}/descrizioni/revert:
+    post:
+      summary: Revert descrizione a una versione precedente
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                version_id:
+                  type: string
+      responses:
+        '201':
+          description: Nuova versione creata da revert
+  /api/roulottes/{id}/duplicate:
+    post:
+      summary: Duplica una scheda roulotte
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Scheda duplicata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Roulotte'
+  /api/dashboard:
+    get:
+      summary: Metriche dashboard
+      responses:
+        '200':
+          description: Metriche
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  valore_inventario:
+                    type: number
+                  in_lavorazione:
+                    type: integer
+                  pubblicate:
+                    type: integer
+  /api/ai/vision:
+    post:
+      summary: Analisi immagine AI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                fallback:
+                  type: string
+                  enum: [google, aws]
+                roulotte_id:
+                  type: string
+                photo_id:
+                  type: string
+      responses:
+        '200':
+          description: Risultati vision
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisionResult'
+  /api/ai/generate-description:
+    post:
+      summary: Generazione testo annuncio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescriptionRequest'
+      responses:
+        '200':
+          description: Testo generato
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescriptionResponse'
+  /api/ai/estimate-price:
+    post:
+      summary: Stima prezzo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceEstimateRequest'
+      responses:
+        '200':
+          description: Stima
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceEstimateResponse'
+  /api/pdf/generate/{id}:
+    post:
+      summary: Genera PDF scheda tecnica
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: PDF generato
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+  /api/share/{id}:
+    post:
+      summary: Crea link pubblico vetrina
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Link creato
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+  /api/roulottes/{id}/unpublish:
+    post:
+      summary: Rimuovi pubblicazione (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Non pubblicata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+  /api/roulottes/{id}:
+    delete:
+      summary: Elimina roulotte (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Eliminata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+  /api/roulottes/export:
+    get:
+      summary: Esporta tutte le schede (admin)
+      responses:
+        '200':
+          description: Dataset completo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Roulotte'
+  /api/roulottes/import:
+    post:
+      summary: Importa schede da array (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Roulotte'
+      responses:
+        '200':
+          description: Import eseguito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  imported:
+                    type: integer
+  /api/admin/logs:
+    get:
+      summary: Log operazioni (admin)
+      responses:
+        '200':
+          description: Elenco log
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  /api/admin/filters:
+    get:
+      summary: Lista filtri salvati (admin)
+      responses:
+        '200':
+          description: Elenco
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+    post:
+      summary: Salva filtro (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                criteria:
+                  type: object
+      responses:
+        '200':
+          description: Salvato
+  /api/admin/filters/{name}:
+    delete:
+      summary: Rimuovi filtro (admin)
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Rimosso
+  /api/admin/auto-describe/{id}:
+    post:
+      summary: Genera e salva descrizione (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tone:
+                  type: string
+      responses:
+        '200':
+          description: OK
+  /api/admin/auto-describe-batch:
+    post:
+      summary: Genera descrizioni per elenco (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: OK
+  /api/roulottes/{id}/photos/{photoId}:
+    delete:
+      summary: Elimina foto (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: photoId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Eliminata
+  /api/roulottes/{id}/lavori/{index}:
+    delete:
+      summary: Elimina lavoro per indice (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: index
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Eliminato
+  /api/roulottes/meta:
+    get:
+      summary: Metadati paginazione e conteggi
+      parameters:
+        - in: query
+          name: stato
+          schema:
+            type: string
+        - in: query
+          name: anno
+          schema:
+            type: integer
+        - in: query
+          name: bagno
+          schema:
+            type: string
+        - in: query
+          name: sanitrit
+          schema:
+            type: boolean
+        - in: query
+          name: page_size
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Metadati
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  pages:
+                    type: integer
+                  by_state:
+                    type: object

@@ -1,0 +1,366 @@
+[
+  {
+    "id": "sample-1",
+    "created_at": "2025-12-11T00:00:00Z",
+    "owner_id": "owner-1",
+    "marca": "Hobby",
+    "modello": "460",
+    "anno": 1998,
+    "dimensioni": {
+      "lunghezza": "5.2m",
+      "larghezza": "2.1m"
+    },
+    "peso": {
+      "vuoto": 900,
+      "massimo": 1200
+    },
+    "stato_generale": "da_sistemare",
+    "documenti": {
+      "libretto": true,
+      "cert_gas": false
+    },
+    "componenti": {
+      "cucina": "mancante",
+      "bagno": "rimosso",
+      "sanitrit": true,
+      "pavimento_rifatto": true,
+      "stufa": "assente",
+      "frigo": "mancante"
+    },
+    "impianti": {
+      "elettrico": "modificato",
+      "acqua": "funzionante",
+      "gas": "rimosso"
+    },
+    "finestre": [
+      {
+        "posizione": "anteriore",
+        "stato": "crepata",
+        "oscurante": true
+      }
+    ],
+    "accessori": [
+      "veranda",
+      "pannello_sol"
+    ],
+    "difetti": [
+      "infiltrazioni",
+      "pavimento_punti_molli"
+    ],
+    "lavori": [
+      {
+        "titolo": "pavimento rifatto",
+        "data": "2025-06-02",
+        "costo": 150
+      }
+    ],
+    "foto": [
+      {
+        "id": "img1",
+        "url": "https://example.com/esterno.jpg",
+        "categoria": "esterno",
+        "ai_tags": [
+          "fiancata",
+          "ammaccatura"
+        ]
+      }
+    ],
+    "prezzo_richiesto": 1990,
+    "prezzo_consigliato": 1850,
+    "utilizzo_consigliato": "piazzola",
+    "pubblico": false,
+    "descrizioni": [
+      {
+        "text": "SCHEDA TECNICA: HOBBY 460 1998\n\nVEICOLO\n- Marca/Modello: Hobby 460\n- Anno: 1998\n- Posti letto: n.d.\n- Dimensioni: 5.2mm x 2.1mm\n- Peso: Vuoto 900kg / Max 1200kg\n\nCONDIZIONI\n- Valutazione generale: da_sistemare\n- Difetti noti: infiltrazioni, pavimento_punti_molli\n- Lavori eseguiti: pavimento rifatto\n- Lavori consigliati: Nessuno\n\nDOTAZIONI\n- Accessori: veranda, pannello_sol\n- Componenti: cucina, bagno, sanitrit, pavimento_rifatto, stufa, frigo\n\nDOCUMENTI E VENDITA\n- Documenti: Documenti da verificare\n- Targa: n.d. / Telaio: n.d.\n- Prezzo: €1990 \n- Note vendita: Pronta consegna. Ritiro in sede.\n",
+        "variant": "professionale",
+        "version_id": "1765494722950",
+        "created_at": "2025-12-11T23:12:02.950Z"
+      }
+    ]
+  },
+  {
+    "marca": "adria",
+    "modello": "unica",
+    "anno": 1991,
+    "stato_generale": "da_sistemare",
+    "pubblico": false,
+    "id": "faf0e945-e365-4429-8ebb-408e2c41d43c",
+    "created_at": "2025-12-11T19:52:47.282Z",
+    "lavori": [
+      {
+        "titolo": "ffdsffsfsfsd",
+        "costo": 5,
+        "data": "2025-12-11"
+      }
+    ],
+    "descrizioni": [
+      {
+        "text": "SCHEDA TECNICA: ADRIA UNICA 1991\n\nVEICOLO\n- Marca/Modello: adria unica\n- Anno: 1991\n- Posti letto: n.d.\n- Dimensioni: n.d. x n.d.\n- Peso: Vuoto n.d. / Max n.d.\n\nCONDIZIONI\n- Valutazione generale: da_sistemare\n- Difetti noti: Nessuno segnalato\n- Lavori eseguiti: ffdsffsfsfsd\n- Lavori consigliati: Nessuno\n\nDOTAZIONI\n- Accessori: Base\n- Componenti: Standard\n\nDOCUMENTI E VENDITA\n- Documenti: Documenti da verificare\n- Targa: n.d. / Telaio: n.d.\n- Prezzo: €0 \n- Note vendita: Pronta consegna. Ritiro in sede.\n",
+        "variant": "professionale",
+        "version_id": "1765494633306",
+        "created_at": "2025-12-11T23:10:33.306Z"
+      },
+      {
+        "text": "SCHEDA TECNICA: ADRIA UNICA 1991\n\nVEICOLO\n- Marca/Modello: adria unica\n- Anno: 1991\n- Posti letto: n.d.\n- Dimensioni: n.d. x n.d.\n- Peso: Vuoto n.d. / Max n.d.\n\nCONDIZIONI\n- Valutazione generale: da_sistemare\n- Difetti noti: Nessuno segnalato\n- Lavori eseguiti: ffdsffsfsfsd\n- Lavori consigliati: Nessuno\n\nDOTAZIONI\n- Accessori: Base\n- Componenti: Standard\n\nDOCUMENTI E VENDITA\n- Documenti: Documenti da verificare\n- Targa: n.d. / Telaio: n.d.\n- Prezzo: €0 \n- Note vendita: Pronta consegna. Ritiro in sede.\n",
+        "variant": "professionale",
+        "version_id": "1765494718077",
+        "created_at": "2025-12-11T23:11:58.077Z"
+      }
+    ]
+  },
+  {
+    "marca": "ADRIA",
+    "modello": "UNICA",
+    "anno": 1991,
+    "dimensioni": {
+      "lunghezza": "5",
+      "larghezza": ""
+    },
+    "peso": {
+      "vuoto": 0,
+      "massimo": 0
+    },
+    "stato_generale": "da_sistemare",
+    "accessori": [
+      "Stufa Truma",
+      "Canalizzazione",
+      "Clima"
+    ],
+    "prezzo_richiesto": 0,
+    "pubblico": false,
+    "dettagli": {
+      "info_generali": {
+        "posti_letto": 0,
+        "targa": "",
+        "numero_telaio": "",
+        "stato_documenti": {
+          "libretto_presente": false,
+          "libretto_mancante": false,
+          "libretto_smarrito": true,
+          "demolizione": false,
+          "solo_stanziale": false
+        }
+      },
+      "stato_generale": {
+        "valutazione": "ottimo",
+        "lavori_consigliati": ""
+      },
+      "prezzo_condizioni": {
+        "prezzo_richiesto": 0,
+        "trattabile": false,
+        "disponibile_da": "",
+        "trasporto": false
+      }
+    },
+    "id": "49681c57-1944-45cf-81d8-0ef625f1b390",
+    "created_at": "2025-12-11T20:47:29.132Z"
+  },
+  {
+    "marca": "nardi",
+    "modello": "monica",
+    "anno": 1977,
+    "stato_generale": "da_sistemare",
+    "pubblico": false,
+    "id": "14cd4238-cc83-49d8-8f3d-abfc66262c62",
+    "created_at": "2025-12-11T21:12:38.108Z",
+    "prezzo_consigliato": 1852
+  },
+  {
+    "marca": "",
+    "modello": "",
+    "anno": 0,
+    "dimensioni": {
+      "lunghezza": "",
+      "larghezza": ""
+    },
+    "peso": {
+      "vuoto": 1000,
+      "massimo": 1300
+    },
+    "stato_generale": "da_sistemare",
+    "accessori": [
+      "Veranda",
+      "Antenna TV",
+      "Stabilizzatore AL-KO"
+    ],
+    "prezzo_richiesto": 0,
+    "pubblico": false,
+    "dettagli": {
+      "info_generali": {
+        "posti_letto": 5,
+        "targa": "non presente",
+        "numero_telaio": "xxxxxx",
+        "stato_documenti": {
+          "libretto_presente": false,
+          "libretto_mancante": true,
+          "libretto_smarrito": false,
+          "demolizione": false,
+          "solo_stanziale": false
+        }
+      },
+      "stato_generale": {
+        "valutazione": "da_sistemare",
+        "lavori_consigliati": "cambio finestra"
+      },
+      "prezzo_condizioni": {
+        "prezzo_richiesto": 0,
+        "trattabile": false,
+        "disponibile_da": "2025-12-25",
+        "trasporto": true
+      }
+    },
+    "id": "001b776a-a87d-4b76-9845-3f645a9d9c9d",
+    "created_at": "2025-12-11T21:12:45.825Z",
+    "prezzo_consigliato": 1700
+  },
+  {
+    "marca": "",
+    "modello": "",
+    "anno": 0,
+    "dimensioni": {
+      "lunghezza": "",
+      "larghezza": ""
+    },
+    "peso": {
+      "vuoto": 1000,
+      "massimo": 1300
+    },
+    "stato_generale": "da_sistemare",
+    "accessori": [
+      "Veranda",
+      "Antenna TV",
+      "Stabilizzatore AL-KO"
+    ],
+    "prezzo_richiesto": 0,
+    "pubblico": false,
+    "dettagli": {
+      "info_generali": {
+        "posti_letto": 5,
+        "targa": "non presente",
+        "numero_telaio": "xxxxxx",
+        "stato_documenti": {
+          "libretto_presente": false,
+          "libretto_mancante": false,
+          "libretto_smarrito": false,
+          "demolizione": false,
+          "solo_stanziale": false
+        }
+      },
+      "stato_generale": {
+        "valutazione": "da_sistemare",
+        "lavori_consigliati": "cambio finestra"
+      },
+      "prezzo_condizioni": {
+        "prezzo_richiesto": 0,
+        "trattabile": false,
+        "disponibile_da": "2025-12-25",
+        "trasporto": true
+      }
+    },
+    "id": "64453dea-d869-4780-ba74-943ac76f2e4b",
+    "created_at": "2025-12-11T21:16:23.293Z",
+    "prezzo_consigliato": 1700
+  },
+  {
+    "marca": "",
+    "modello": "",
+    "anno": 0,
+    "dimensioni": {
+      "lunghezza": "",
+      "larghezza": ""
+    },
+    "peso": {
+      "vuoto": 1000,
+      "massimo": 1300
+    },
+    "stato_generale": "da_sistemare",
+    "accessori": [
+      "Veranda",
+      "Antenna TV",
+      "Stabilizzatore AL-KO"
+    ],
+    "prezzo_richiesto": 0,
+    "pubblico": false,
+    "dettagli": {
+      "info_generali": {
+        "posti_letto": 5,
+        "targa": "non presente",
+        "numero_telaio": "xxxxxx",
+        "stato_documenti": {
+          "libretto_presente": false,
+          "libretto_mancante": false,
+          "libretto_smarrito": false,
+          "demolizione": false,
+          "solo_stanziale": false
+        }
+      },
+      "stato_generale": {
+        "valutazione": "da_sistemare",
+        "lavori_consigliati": "cambio finestra"
+      },
+      "prezzo_condizioni": {
+        "prezzo_richiesto": 0,
+        "trattabile": false,
+        "disponibile_da": "2025-12-25",
+        "trasporto": true
+      }
+    },
+    "id": "37a54390-af18-439c-a97e-cef30c79ba7a",
+    "created_at": "2025-12-11T21:31:08.459Z",
+    "prezzo_consigliato": 1700
+  },
+  {
+    "marca": "",
+    "modello": "",
+    "anno": 0,
+    "dimensioni": {
+      "lunghezza": "",
+      "larghezza": ""
+    },
+    "peso": {
+      "vuoto": 0,
+      "massimo": 0
+    },
+    "stato_generale": "da_sistemare",
+    "accessori": [
+      "Veranda",
+      "Tendalino",
+      "Stufa",
+      "Antenna TV",
+      "TV"
+    ],
+    "prezzo_richiesto": 0,
+    "pubblico": false,
+    "dettagli": {
+      "info_generali": {
+        "posti_letto": 0,
+        "targa": "",
+        "numero_telaio": "",
+        "stato_documenti": {
+          "libretto_presente": false,
+          "libretto_mancante": false,
+          "libretto_smarrito": false,
+          "demolizione": false,
+          "solo_stanziale": true
+        },
+        "layout": "",
+        "condizioni_veicolo": "Usato",
+        "garanzia_mesi": 0
+      },
+      "stato_generale": {
+        "valutazione": "da_sistemare",
+        "lavori_consigliati": ""
+      },
+      "prezzo_condizioni": {
+        "prezzo_richiesto": 0,
+        "prezzo_listino": 0,
+        "trattabile": true,
+        "disponibile_da": "",
+        "trasporto": true
+      }
+    },
+    "id": "5281a71a-304b-4d67-b9f5-75e6387ce1e1",
+    "created_at": "2025-12-12T00:05:29.500Z",
+    "prezzo_consigliato": 1700
+  }
+]

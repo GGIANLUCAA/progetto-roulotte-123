@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roulottepro.example.com/schemas/roulotte.schema.json",
+  "title": "Roulotte",
+  "type": "object",
+  "required": [
+    "id",
+    "created_at",
+    "owner_id",
+    "marca",
+    "modello",
+    "anno",
+    "pubblico"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "owner_id": { "type": "string" },
+    "marca": { "type": "string" },
+    "modello": { "type": "string" },
+    "anno": { "type": "integer", "minimum": 1900, "maximum": 2100 },
+    "dimensioni": {
+      "type": "object",
+      "properties": {
+        "lunghezza": { "type": "string" },
+        "larghezza": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "peso": {
+      "type": "object",
+      "properties": {
+        "vuoto": { "type": "number" },
+        "massimo": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "stato_generale": {
+      "type": "string",
+      "enum": ["ottimo", "buono", "da_sistemare", "da_rottamare"]
+    },
+    "documenti": {
+      "type": "object",
+      "properties": {
+        "libretto": { "type": "boolean" },
+        "cert_gas": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "componenti": {
+      "type": "object",
+      "properties": {
+        "cucina": { "type": "string" },
+        "bagno": { "type": "string" },
+        "sanitrit": { "type": "boolean" },
+        "pavimento_rifatto": { "type": "boolean" },
+        "stufa": { "type": "string" },
+        "frigo": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "impianti": {
+      "type": "object",
+      "properties": {
+        "elettrico": { "type": "string" },
+        "acqua": { "type": "string" },
+        "gas": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "finestre": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "posizione": { "type": "string" },
+          "stato": { "type": "string" },
+          "oscurante": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "accessori": { "type": "array", "items": { "type": "string" } },
+    "difetti": { "type": "array", "items": { "type": "string" } },
+    "lavori": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "titolo": { "type": "string" },
+          "data": { "type": "string", "format": "date" },
+          "costo": { "type": "number", "minimum": 0 }
+        },
+        "required": ["titolo"],
+        "additionalProperties": false
+      }
+    },
+    "foto": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "categoria": {
+            "type": "string",
+            "enum": [
+              "esterno",
+              "interno",
+              "cucina",
+              "bagno",
+              "pavimento",
+              "underbody",
+              "documento"
+            ]
+          },
+          "ai_tags": { "type": "array", "items": { "type": "string" } },
+          "ai_raw": { "type": "object" },
+          "bboxes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string" },
+                "x": { "type": "number" },
+                "y": { "type": "number" },
+                "w": { "type": "number" },
+                "h": { "type": "number" }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["id", "url"],
+        "additionalProperties": true
+      }
+    },
+    "prezzo_richiesto": { "type": "number", "minimum": 0 },
+    "prezzo_consigliato": { "type": "number", "minimum": 0 },
+    "utilizzo_consigliato": { "type": "string" },
+    "pubblico": { "type": "boolean" }
+  },
+  "additionalProperties": true
+}
