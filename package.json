@@ -5,6 +5,7 @@
     "uuid": "^13.0.0"
   },
   "scripts": {
-    "start": "node server/src/index.js"
+    "start": "npm --prefix server start",
+    "postinstall": "npm --prefix server install"
   }
 }
