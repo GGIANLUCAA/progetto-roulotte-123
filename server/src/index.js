@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static(path.join(__dirname, "../public")));
-app.use("/public/uploads", express.static(path.join(process.cwd(), "server", "uploads")));
+app.use("/public/uploads", express.static(path.join(__dirname, "../public/uploads")));
 app.use("/public/pdfs", express.static(path.join(process.cwd(), "server", "public", "pdfs")));
 app.use("/public/images", imagesRouter);
 

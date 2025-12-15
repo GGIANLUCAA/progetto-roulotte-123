@@ -4,39 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Roulotte Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
   <link rel="manifest" href="/public/manifest.json" />
-  <style>
-    :root { --bg:#f8fafc; --card:#ffffff; --border:#e5e7eb; --text:#0f172a; --muted:#64748b; --brand:#0ea5e9; --brand-contrast:#ffffff; --pill:#eef2ff; --pill-text:#3730a3; --success:#22c55e; --danger:#ef4444; }
-    html,body { height: 100%; }
-    body { font-family: system-ui, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
-    header { position: sticky; top: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: .75rem 1rem; display:flex; align-items:center; justify-content:space-between; z-index: 10; }
-    header .brand { font-weight: 700; letter-spacing:.3px; }
-    .container { padding: 1rem; }
-    .tabs { display:flex; gap:.5rem; margin-bottom:.75rem; }
-    .tabs button { padding:.5rem 1rem; border:1px solid var(--brand); background:#fff; color:var(--brand); border-radius:10px; }
-    .tabs button.active { background: var(--brand); color: #fff; }
-    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); }
-    .card { border: 1px solid var(--border); border-radius: 12px; padding: 1rem; background: var(--card); box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: box-shadow 0.2s; }
-    .card:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-    .muted { color: var(--muted); font-size: .92rem; }
-    .row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
-    input, select { padding: .6rem .7rem; border: 1px solid var(--border); border-radius: 10px; background: #fff; min-width: 180px; }
-    button { padding: .55rem 1rem; border: 1px solid var(--brand); background: var(--brand); color: var(--brand-contrast); border-radius: 10px; cursor: pointer; }
-    button.secondary { background: #fff; color: var(--brand); }
-    .title { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
-    .pill { display:inline-block; padding:.25rem .6rem; border-radius:999px; background: var(--pill); color: var(--pill-text); font-size:.8rem; }
-    .imgwrap { position: relative; }
-    img { width: 100%; height: auto; border-radius: 10px; display: block; }
-    canvas.overlay { position: absolute; left: 0; top: 0; pointer-events: none; }
-    .actions { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.5rem; }
-    .hidden { display:none; }
-    .toast { position: fixed; bottom: 1rem; right: 1rem; background: #1e293b; color: #fff; border:1px solid #334155; padding: 1rem 1.5rem; border-radius:10px; box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); z-index: 50; animation: slideUp 0.3s ease-out; }
-    @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(4px); }
-    .modal-overlay.hidden { display: none; }
-    .spinner { width: 24px; height: 24px; border: 3px solid var(--muted); border-top-color: var(--brand); border-radius: 50%; animation: spin .8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-  </style>
+
   </head>
 <body>
   <div id="viewLogin" class="modal-overlay hidden">
@@ -45,29 +18,37 @@
       <div class="grid">
         <input id="loginEmail" placeholder="Email" value="superadmin@roulotte.pro" />
         <input id="loginPass" placeholder="Password" type="password" value="admin" />
-        <button id="loginBtn">Login</button>
-        <div id="loginOut" class="muted" style="color:var(--danger)"></div>
+        <button id="loginBtn" class="btn btn-primary w-full">Login</button>
+        <div id="loginOut" class="muted text-danger"></div>
       </div>
     </div>
   </div>
 
   <div id="confirmModal" class="modal-overlay hidden">
     <div class="card" style="width:100%;max-width:350px;padding:1.5rem;">
-      <h3 style="margin-top:0" id="confirmTitle">Conferma</h3>
+      <h3 id="confirmTitle">Conferma</h3>
       <p id="confirmMsg">Sei sicuro?</p>
-      <div class="row" style="justify-content:flex-end;margin-top:1rem;">
-        <button class="secondary" id="confirmCancel">Annulla</button>
-        <button id="confirmOk" style="background:var(--danger);border-color:var(--danger);color:#fff">Conferma</button>
+      <div class="row mt-2 justify-end gap-2">
+        <button class="btn btn-secondary" id="confirmCancel">Annulla</button>
+        <button id="confirmOk" class="btn btn-danger">Conferma</button>
       </div>
     </div>
   </div>
 
   <header>
     <div class="brand">Roulotte Pro</div>
-    <div class="row"><span class="pill" id="rolepill">ospite</span><span class="muted" id="tokendisp">—</span><button class="secondary" id="logoutBtn" style="font-size:0.8rem;padding:0.2rem 0.6rem;">Esci</button></div>
+    <div class="row">
+      <span class="pill" id="rolepill">ospite</span>
+      <span class="muted" id="tokendisp">—</span>
+      <button class="btn btn-secondary btn-sm" id="logoutBtn">Esci</button>
+    </div>
   </header>
   <div class="container">
-    <div class="tabs"><button id="tabOperatore" class="active">Operatore</button><button id="tabAdmin">Amministrazione</button><button id="tabInfo">Info</button></div>
+    <div class="tabs">
+      <button id="tabOperatore" class="btn btn-primary">Operatore</button>
+      <button id="tabAdmin" class="btn btn-secondary">Amministrazione</button>
+      <button id="tabInfo" class="btn btn-secondary">Info</button>
+    </div>
     <div id="viewOperatore">
       <div class="grid">
         <div class="card">
@@ -77,7 +58,7 @@
         
         <div class="card">
           <h2>Nuova Roulotte</h2>
-          <div class="grid" style="grid-template-columns:1fr 1fr;">
+          <div class="grid grid-cols-2">
             <input id="marca" placeholder="Marca" />
             <input id="modello" placeholder="Modello" />
             <input id="anno" placeholder="Anno" type="number" />
@@ -88,12 +69,12 @@
               <option value="da_rottamare">da_rottamare</option>
             </select>
           </div>
-          <div class="row" style="margin-top:.5rem"><button id="create">Crea</button></div>
+          <div class="row mt-2"><button id="create" class="btn btn-primary">Crea</button></div>
           <div class="muted" id="createout"></div>
         </div>
         <div class="card">
           <h2>Scheda dettagliata</h2>
-          <div class="grid" style="grid-template-columns:1fr 1fr;">
+          <div class="grid grid-cols-2">
             <input id="d_marca" placeholder="Marca" />
             <input id="d_modello" placeholder="Modello" />
             <input id="d_anno" placeholder="Anno" type="number" />
@@ -105,18 +86,18 @@
             <input id="d_targa" placeholder="Targa / Non targata" />
             <input id="d_numero_telaio" placeholder="Numero telaio" />
           </div>
-          <div class="row" style="margin-top:.5rem">
+          <div class="row mt-2">
             <label><input type="checkbox" id="d_doc_libretto_presente" /> Libretto presente</label>
             <label><input type="checkbox" id="d_doc_libretto_mancante" /> Libretto mancante</label>
             <label><input type="checkbox" id="d_doc_libretto_smarrito" /> Libretto smarrito</label>
             <label><input type="checkbox" id="d_doc_demolizione" /> Roulotte da demolizione</label>
             <label><input type="checkbox" id="d_doc_stanziale" /> SOLO uso stanziale</label>
           </div>
-          <div class="row" style="margin-top:.5rem">
+          <div class="row mt-2">
             <select id="d_valutazione"><option>ottimo</option><option>buono</option><option>da_sistemare</option><option>da_rottamare</option></select>
             <input id="d_lavori" placeholder="Eventuali lavori consigliati" />
           </div>
-          <div class="row" style="margin-top:.5rem">
+          <div class="row mt-2">
             <input id="d_prezzo" placeholder="Prezzo richiesto" type="number" />
             <input id="d_prezzo_listino" placeholder="Prezzo listino" type="number" />
             <input id="d_garanzia" placeholder="Garanzia (mesi)" type="number" />
@@ -124,8 +105,8 @@
             <input id="d_disponibile" placeholder="Disponibile da" type="date" />
             <label><input type="checkbox" id="d_trasporto" /> Possibilità trasporto</label>
           </div>
-          <div class="row" style="margin-top:1rem">
-            <h3 style="width:100%;border-bottom:1px solid #ddd;padding-bottom:0.3rem;margin-bottom:0.5rem;color:var(--brand)">Esterno & Telaio</h3>
+          <div class="row mt-2">
+            <h3 class="section-title">Esterno & Telaio</h3>
             <label><input type="checkbox" class="d_acc" value="Veranda" /> Veranda</label>
             <label><input type="checkbox" class="d_acc" value="Tendalino" /> Tendalino</label>
             <label><input type="checkbox" class="d_acc" value="Mover" /> Mover</label>
@@ -136,8 +117,8 @@
             <label><input type="checkbox" class="d_acc" value="Ruota Scorta" /> Ruota Scorta</label>
             <label><input type="checkbox" class="d_acc" value="Piedini Rinforzati" /> Piedini Rinforzati</label>
           </div>
-          <div class="row" style="margin-top:0.5rem">
-            <h3 style="width:100%;border-bottom:1px solid #ddd;padding-bottom:0.3rem;margin-bottom:0.5rem;color:var(--brand)">Interno & Comfort</h3>
+          <div class="row mt-2">
+            <h3 class="section-title">Interno & Comfort</h3>
             <label><input type="checkbox" class="d_acc" value="Climatizzatore" /> Climatizzatore</label>
             <label><input type="checkbox" class="d_acc" value="Stufa" /> Stufa</label>
             <label><input type="checkbox" class="d_acc" value="Canalizzazione" /> Canalizzazione</label>
@@ -148,8 +129,8 @@
             <label><input type="checkbox" class="d_acc" value="Zanzariera Porta" /> Zanzariera Porta</label>
             <label><input type="checkbox" class="d_acc" value="Maxi Oblò" /> Maxi Oblò</label>
           </div>
-          <div class="row" style="margin-top:0.5rem">
-            <h3 style="width:100%;border-bottom:1px solid #ddd;padding-bottom:0.3rem;margin-bottom:0.5rem;color:var(--brand)">Tecnologia & Bagno</h3>
+          <div class="row mt-2">
+            <h3 class="section-title">Tecnologia & Bagno</h3>
             <label><input type="checkbox" class="d_acc" value="Antenna TV" /> Antenna TV</label>
             <label><input type="checkbox" class="d_acc" value="TV" /> TV Inclusa</label>
             <label><input type="checkbox" class="d_acc" value="Impianto Audio" /> Impianto Audio</label>
@@ -160,13 +141,30 @@
             <label><input type="checkbox" class="d_acc" value="Serbatoio Grigie" /> Serbatoio Grigie</label>
             <label><input type="checkbox" class="d_acc" value="Attacco Acqua City" /> Attacco Acqua City</label>
           </div>
-          <div class="row" style="margin-top:.5rem">
+          <div class="row mt-2">
              <input id="d_layout" placeholder="Layout interno (es. letti gemelli)" />
              <select id="d_condizioni_veicolo"><option value="Usato">Usato</option><option value="Nuovo">Nuovo</option><option value="Km0">Km0</option><option value="Ex-Noleggio">Ex-Noleggio</option></select>
           </div>
-          <div class="row" style="margin-top:.5rem"><button id="createDetailed">Crea dettagliata</button></div>
+          <div class="row mt-2"><button id="createDetailed" class="btn btn-primary">Crea dettagliata</button></div>
         </div>
-        <div class="card" style="grid-column:1/-1">
+        <div class="card mt-2">
+          <h3 class="section-title">Gestione Immagini</h3>
+          <div id="gallery" class="gallery"></div>
+          <div class="row mt-2">
+            <input type="file" id="photoInput" multiple accept="image/*" class="w-full">
+          </div>
+          <div class="row mt-1">
+            <select id="photoCategory">
+              <option value="esterno">Esterno</option>
+              <option value="interno">Interno</option>
+              <option value="dettagli">Dettagli</option>
+              <option value="danni">Danni</option>
+            </select>
+            <button id="uploadBtn" class="btn btn-primary">Carica Foto</button>
+          </div>
+          <div id="uploadOut" class="muted"></div>
+        </div>
+        <div class="card col-span-full">
           <div class="title"><h2>Elenco Roulotte</h2>
             <div class="row">
               <input id="filterAnno" placeholder="Anno" type="number" />
@@ -177,7 +175,7 @@
                 <option value="prezzo:desc">Prezzo decrescente</option>
                 <option value="anno:desc">Anno più recente</option>
               </select>
-              <input id="page" placeholder="Pagina" type="number" value="1" /><input id="pageSize" placeholder="Per pagina" type="number" value="20" /><button class="secondary" id="refresh">Aggiorna</button><button class="secondary" id="resetFilters">Reset filtri</button>
+              <input id="page" placeholder="Pagina" type="number" value="1" /><input id="pageSize" placeholder="Per pagina" type="number" value="20" /><button class="btn btn-secondary" id="refresh">Aggiorna</button><button class="btn btn-secondary" id="resetFilters">Reset filtri</button>
             </div>
           </div>
           <div id="list" class="grid" style="margin-top:.5rem"></div>
@@ -187,15 +185,15 @@
     <div id="viewAdmin" class="hidden">
       <div class="grid">
         <div class="card">
-          <div class="title"><h2>Amministrazione</h2><button class="secondary" id="logsBtn">Log</button></div>
-          <div class="row" style="margin-top:.5rem"><button id="exportBtn">Esporta JSON</button><input type="file" id="importFile" accept="application/json" /><button class="secondary" id="importBtn">Importa</button></div>
-          <div class="row" style="margin-top:.5rem"><select id="adminSelect"></select><button class="secondary" id="unpublishBtn">Rimuovi pubblicazione</button><button id="deleteBtn">Elimina</button></div>
-          <div class="row" style="margin-top:.5rem"><input id="afAnnoMin" placeholder="Anno min" type="number" /><input id="afAnnoMax" placeholder="Anno max" type="number" /><select id="afStato"><option value="">Stato</option><option>ottimo</option><option>buono</option><option>da_sistemare</option><option>da_rottamare</option></select><input id="afTag" placeholder="Tag AI contiene" /><button class="secondary" id="afApply">Applica filtri</button></div>
-          <div class="row" style="margin-top:.5rem"><div id="bulkList" style="max-height:200px;overflow:auto;border:1px solid var(--border);padding:.5rem;border-radius:.5rem;flex:1"></div></div>
-          <div class="row" style="margin-top:.5rem"><button class="secondary" id="bulkPublish">Bulk Pubblica</button><button class="secondary" id="bulkUnpublish">Bulk Rimuovi Pubblicazione</button><button id="bulkDelete">Bulk Elimina</button></div>
-          <div class="row" style="margin-top:.5rem"><input id="filterName" placeholder="Nome filtro" /><button class="secondary" id="saveFilter">Salva filtro</button><button class="secondary" id="loadFilters">Carica filtri</button><select id="filtersSelect"></select><button class="secondary" id="applySavedFilter">Applica</button><button id="removeFilter">Rimuovi</button></div>
-          <div class="row" style="margin-top:.5rem"><button class="secondary" id="autoDescribe">Auto-descrivi selezionati</button></div>
-          <div class="row" style="margin-top:.5rem"><textarea id="jsonEditor" placeholder="Modifica JSON scheda selezionata" style="width:100%;height:160px"></textarea><button id="saveJson">Salva JSON</button></div>
+          <div class="title"><h2>Amministrazione</h2><button class="btn btn-secondary" id="logsBtn">Log</button></div>
+          <div class="row mt-2"><button id="exportBtn" class="btn btn-primary">Esporta JSON</button><input type="file" id="importFile" accept="application/json" /><button class="btn btn-secondary" id="importBtn">Importa</button></div>
+          <div class="row mt-2"><select id="adminSelect"></select><button class="btn btn-secondary" id="unpublishBtn">Rimuovi pubblicazione</button><button id="deleteBtn" class="btn btn-danger">Elimina</button></div>
+          <div class="row mt-2"><input id="afAnnoMin" placeholder="Anno min" type="number" /><input id="afAnnoMax" placeholder="Anno max" type="number" /><select id="afStato"><option value="">Stato</option><option>ottimo</option><option>buono</option><option>da_sistemare</option><option>da_rottamare</option></select><input id="afTag" placeholder="Tag AI contiene" /><button class="btn btn-secondary" id="afApply">Applica filtri</button></div>
+          <div class="row mt-2"><div id="bulkList" style="max-height:200px;overflow:auto;border:1px solid var(--border);padding:.5rem;border-radius:.5rem;flex:1"></div></div>
+          <div class="row mt-2"><button class="btn btn-secondary" id="bulkPublish">Bulk Pubblica</button><button class="btn btn-secondary" id="bulkUnpublish">Bulk Rimuovi Pubblicazione</button><button id="bulkDelete" class="btn btn-danger">Bulk Elimina</button></div>
+          <div class="row mt-2"><input id="filterName" placeholder="Nome filtro" /><button class="btn btn-secondary" id="saveFilter">Salva filtro</button><button class="btn btn-secondary" id="loadFilters">Carica filtri</button><select id="filtersSelect"></select><button class="btn btn-secondary" id="applySavedFilter">Applica</button><button id="removeFilter" class="btn btn-danger">Rimuovi</button></div>
+          <div class="row mt-2"><button class="btn btn-secondary" id="autoDescribe">Auto-descrivi selezionati</button></div>
+          <div class="row mt-2"><textarea id="jsonEditor" class="json-editor" placeholder="Modifica JSON scheda selezionata"></textarea><button id="saveJson" class="btn btn-primary">Salva JSON</button></div>
           <pre id="adminOut" class="muted"></pre>
         </div>
       </div>
@@ -204,431 +202,6 @@
       <div class="grid"><div class="card"><h2>Info</h2><div class="muted">Documentazione API in docs/openapi.yaml · Modello dati in docs/json-schemas/roulotte.schema.json.</div></div></div>
     </div>
   </div>
-  <script>
-    let token = localStorage.getItem('token');
-    
-    const api = async (url, opts={}) => {
-      const res = await fetch(url, { ...opts, headers: { ...(opts.headers||{}), ...(token?{ Authorization: 'Bearer '+token }:{}), 'Content-Type': (opts.body instanceof FormData)?undefined:'application/json' } });
-      if (res.status === 401) {
-        token = null;
-        localStorage.removeItem('token');
-        showLogin();
-      }
-      return res;
-    };
-    
-    const el = id => document.getElementById(id);
-    function show(id){ el('viewOperatore').classList.add('hidden'); el('viewAdmin').classList.add('hidden'); el('viewInfo').classList.add('hidden'); el(id).classList.remove('hidden'); }
-    function toast(msg){ const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(()=>{ t.remove(); }, 2500); }
-    
-    function showLogin() { el('viewLogin').classList.remove('hidden'); }
-    
-    // Init Auth
-    if (token) {
-      try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const payload = JSON.parse(window.atob(base64));
-        el('rolepill').textContent = payload.role || 'utente';
-        el('tokendisp').textContent = payload.name || payload.sub;
-      } catch {
-        token = null; localStorage.removeItem('token'); showLogin();
-      }
-    } else {
-      showLogin();
-    }
-
-    el('loginBtn').onclick = async () => {
-      const email = el('loginEmail').value;
-      const password = el('loginPass').value;
-      try {
-        const r = await fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password}) });
-        if (r.ok) {
-          const j = await r.json();
-          token = j.token;
-          localStorage.setItem('token', token);
-          el('viewLogin').classList.add('hidden');
-          window.location.reload();
-        } else {
-          const j = await r.json();
-          el('loginOut').textContent = j.error || 'Errore login';
-        }
-      } catch(e) {
-        el('loginOut').textContent = 'Errore di connessione';
-      }
-    };
-    
-    el('logoutBtn').onclick = () => {
-      token = null;
-      localStorage.removeItem('token');
-      window.location.reload();
-    };
-
-    el('tabOperatore').onclick = () => { show('viewOperatore'); el('tabOperatore').classList.add('active'); el('tabAdmin').classList.remove('active'); el('tabInfo').classList.remove('active'); };
-    el('tabAdmin').onclick = () => { show('viewAdmin'); el('tabAdmin').classList.add('active'); el('tabOperatore').classList.remove('active'); el('tabInfo').classList.remove('active'); };
-    el('tabInfo').onclick = () => { show('viewInfo'); el('tabInfo').classList.add('active'); el('tabOperatore').classList.remove('active'); el('tabAdmin').classList.remove('active'); };
-
-
-    el('create').onclick = async () => {
-      const body = { marca: el('marca').value, modello: el('modello').value, anno: Number(el('anno').value), stato_generale: el('stato').value, pubblico: false };
-      const r = await api('/api/roulottes', { method: 'POST', body: JSON.stringify(body) });
-      const j = await r.json(); el('createout').textContent = 'Creato: '+j.id; toast('Scheda creata'); renderList();
-    };
-    el('createDetailed').onclick = async () => {
-      const acc = Array.from(document.querySelectorAll('.d_acc')).filter(i=>i.checked).map(i=>i.value);
-      const body = {
-        marca: el('d_marca').value,
-        modello: el('d_modello').value,
-        anno: Number(el('d_anno').value),
-        dimensioni: { lunghezza: el('d_lunghezza').value, larghezza: el('d_larghezza').value },
-        peso: { vuoto: Number(el('d_peso_vuoto').value)||0, massimo: Number(el('d_peso_complessivo').value)||0 },
-        stato_generale: el('d_valutazione').value,
-        accessori: acc,
-        prezzo_richiesto: Number(el('d_prezzo').value)||0,
-        pubblico: false,
-        dettagli: {
-          info_generali: { posti_letto: Number(el('d_posti').value)||0, targa: el('d_targa').value, numero_telaio: el('d_numero_telaio').value, stato_documenti: { libretto_presente: el('d_doc_libretto_presente').checked, libretto_mancante: el('d_doc_libretto_mancante').checked, libretto_smarrito: el('d_doc_libretto_smarrito').checked, demolizione: el('d_doc_demolizione').checked, solo_stanziale: el('d_doc_stanziale').checked }, layout: el('d_layout').value, condizioni_veicolo: el('d_condizioni_veicolo').value, garanzia_mesi: Number(el('d_garanzia').value)||0 },
-          stato_generale: { valutazione: el('d_valutazione').value, lavori_consigliati: el('d_lavori').value },
-          prezzo_condizioni: { prezzo_richiesto: Number(el('d_prezzo').value)||0, prezzo_listino: Number(el('d_prezzo_listino').value)||0, trattabile: el('d_trattabile').checked, disponibile_da: el('d_disponibile').value, trasporto: el('d_trasporto').checked }
-        }
-      };
-      const r = await api('/api/roulottes', { method: 'POST', body: JSON.stringify(body) });
-      const j = await r.json(); toast('Scheda dettagliata creata'); renderList();
-    };
-
-    el('refresh').onclick = () => renderList();
-    el('dbRefresh').onclick = () => renderDashboard();
-    function askConfirm(msg, onOk) {
-      el('confirmMsg').textContent = msg;
-      el('confirmModal').classList.remove('hidden');
-      el('confirmOk').onclick = () => { el('confirmModal').classList.add('hidden'); onOk(); };
-      el('confirmCancel').onclick = () => { el('confirmModal').classList.add('hidden'); };
-    }
-
-    el('exportBtn').onclick = async () => { const r = await api('/api/roulottes/export'); const j = await r.json(); const blob = new Blob([JSON.stringify(j,null,2)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'roulotte-export.json'; a.click(); };
-    el('importBtn').onclick = async () => { const f = el('importFile').files[0]; if(!f){ el('adminOut').textContent='Seleziona file JSON'; return; } const text = await f.text(); const arr = JSON.parse(text||'[]'); const r = await api('/api/roulottes/import', { method:'POST', body: JSON.stringify(arr) }); const j = await r.json(); el('adminOut').textContent='Importate: '+j.imported; toast('Import completato'); renderList(); renderAdminSelect(); };
-    
-    el('deleteBtn').onclick = () => { 
-      const id = el('adminSelect').value; 
-      if(!id){ el('adminOut').textContent='Seleziona una scheda'; return; } 
-      askConfirm('Eliminare definitivamente la scheda '+id+'?', async () => {
-        const r = await api('/api/roulottes/'+id, { method:'DELETE' }); 
-        if(r.ok){ el('adminOut').textContent='Eliminata '+id; toast('Eliminata'); renderList(); renderAdminSelect(); }
-      });
-    };
-    
-    el('unpublishBtn').onclick = async () => { const id = el('adminSelect').value; if(!id){ el('adminOut').textContent='Seleziona una scheda'; return; } const r = await api('/api/roulottes/'+id+'/unpublish', { method:'POST' }); if(r.ok){ el('adminOut').textContent='Non pubblicata '+id; toast('Pubblicazione rimossa'); } };
-    el('logsBtn').onclick = async () => { const r = await api('/api/admin/logs'); const j = await r.json(); el('adminOut').textContent = JSON.stringify(j.slice(-20), null, 2); };
-    el('afTag').addEventListener('input', debounce(() => {
-         const val = el('afTag').value;
-         if (val.length > 2) renderAdminSelect(true);
-      }, 500));
-      
-      // Auto-search in main list
-      el('filterAnno').addEventListener('input', debounce(renderList, 600));
-      el('filterStato').addEventListener('change', renderList);
-      el('sortList').addEventListener('change', renderList);
-    el('bulkPublish').onclick = () => bulkAction('publish');
-    el('bulkUnpublish').onclick = () => bulkAction('unpublish');
-    el('bulkDelete').onclick = () => {
-      const ids = Array.from(el('bulkList').querySelectorAll('input[type=checkbox]')).filter(i=>i.checked).map(i=>i.value);
-      if (!ids.length) return;
-      askConfirm('Eliminare '+ids.length+' elementi selezionati?', () => bulkAction('delete'));
-    };
-    el('saveFilter').onclick = async () => { const name = el('filterName').value; if(!name){ el('adminOut').textContent='Inserisci nome filtro'; return; } const criteria = { annoMin: el('afAnnoMin').value, annoMax: el('afAnnoMax').value, stato: el('afStato').value, tag: el('afTag').value }; const r = await api('/api/admin/filters', { method:'POST', body: JSON.stringify({ name, criteria }) }); if(r.ok){ el('adminOut').textContent='Filtro salvato'; } };
-    el('loadFilters').onclick = async () => { const r = await api('/api/admin/filters'); const j = await r.json(); el('filtersSelect').innerHTML = j.map(f => `<option value="${f.name}">${f.name}</option>`).join(''); };
-    el('applySavedFilter').onclick = async () => { const name = el('filtersSelect').value; if(!name){ return; } const r = await api('/api/admin/filters'); const j = await r.json(); const f = j.find(x => x.name===name); if(!f){ return; } el('afAnnoMin').value = f.criteria?.annoMin||''; el('afAnnoMax').value = f.criteria?.annoMax||''; el('afStato').value = f.criteria?.stato||''; el('afTag').value = f.criteria?.tag||''; renderAdminSelect(true); };
-    el('removeFilter').onclick = async () => { const name = el('filtersSelect').value; if(!name){ return; } const r = await api('/api/admin/filters/'+encodeURIComponent(name), { method:'DELETE' }); if(r.ok){ el('adminOut').textContent='Filtro rimosso'; el('filtersSelect').innerHTML=''; } };
-    el('autoDescribe').onclick = async () => { const ids = Array.from(el('bulkList').querySelectorAll('input[type=checkbox]')).filter(i=>i.checked).map(i=>i.value); if(!ids.length){ el('adminOut').textContent='Seleziona elementi'; return; } const r = await api('/api/admin/auto-describe-batch', { method:'POST', body: JSON.stringify({ ids }) }); const j = await r.json(); el('adminOut').textContent='Auto-descrizioni generate: '+j.processed; };
-    el('saveJson').onclick = async () => { const id = el('adminSelect').value; if(!id){ el('adminOut').textContent='Seleziona una scheda'; return; } let obj; try{ obj = JSON.parse(el('jsonEditor').value||'{}'); }catch{ el('adminOut').textContent='JSON non valido'; return; } const r = await api('/api/roulottes/'+id, { method:'PUT', body: JSON.stringify(obj) }); if(r.ok){ el('adminOut').textContent='JSON salvato'; renderList(); renderAdminSelect(true); } };
-
-    async function renderList(){
-      const qs = []; const anno = el('filterAnno').value; const stato = el('filterStato').value; 
-      let page = Number(el('page').value)||1; if(page<1) page=1; el('page').value = page;
-      const pageSize = Number(el('pageSize').value)||20; 
-      if (anno) qs.push('anno='+encodeURIComponent(anno)); if (stato) qs.push('stato='+encodeURIComponent(stato)); qs.push('page='+page); qs.push('page_size='+pageSize);
-      
-      const sort = el('sortList')?.value;
-      if (sort) qs.push('sort='+sort);
-
-      const c = el('list'); c.innerHTML = '<div class="card" style="display:flex;justify-content:center;padding:2rem"><div class="spinner"></div></div>';
-      const r = await api('/api/roulottes'+(qs.length?('?'+qs.join('&')):''));
-      if (!r.ok){ c.innerHTML = '<div class="card">Impossibile caricare elenco.</div>'; return; }
-      let items = await r.json(); if (!Array.isArray(items)) items = [];
-      const metaR = await api('/api/roulottes/meta?'+qs.filter(x=>!x.startsWith('page=')).join('&')); const meta = metaR.ok? await metaR.json(): { total: items.length, pages: 1 };
-      c.innerHTML = '';
-      const current = Number(el('page').value)||1;
-      const pagControls = document.createElement('div'); pagControls.className='row'; pagControls.innerHTML = `<button class="secondary" id="prevPage">Precedente</button><button class="secondary" id="nextPage">Successivo</button><span class="muted">Pagina ${current} di ${meta.pages} · Totale ${meta.total}</span>`; c.appendChild(pagControls);
-      items.forEach(x => {
-        const d = document.createElement('div'); d.className = 'card';
-        const first = (x.foto||[])[0]?.url;
-        const photosHtml = (x.foto||[]).map(f => `<div class=\"imgwrap\" style=\"margin-top:.5rem\"><img id=\"img-${x.id}-${f.id}\" src=\"${f.url}\" /><canvas id=\"cv-${x.id}-${f.id}\" class=\"overlay\"></canvas></div>`).join('');
-        const selector = (x.foto||[]).map(f => `<option value=\"${f.id}\">${f.id}</option>`).join('');
-        const badgePub = x.pubblico ? '<span class=\"pill\" style=\"background:#dcfce7;color:#166534\">pubblicata</span>' : '';
-        const costi = (x.lavori||[]).reduce((a, y) => a + (Number(y.costo)||0), 0);
-        const tagsHtml = (x.foto||[]).map(f => (Array.isArray(f.ai_tags)&&f.ai_tags.length)?`<div class=\"muted\">${f.id}: ${(f.ai_tags||[]).join(', ')}</div>`:'' ).join('');
-        d.innerHTML = `<div class=\"title\"><strong>${x.marca||''} ${x.modello||''} ${x.anno||''}</strong><span class=\"pill\">${x.stato_generale||''}</span>${badgePub}</div>${first?photosHtml:''}${tagsHtml}<div class=\"muted\">Prezzo cons.: €${x.prezzo_consigliato||''} · Lavori: €${costi}</div><div class=\"actions\"><div style=\"display:flex;gap:0.5rem;flex-direction:column\"><div style=\"display:flex;gap:0.5rem;align-items:center\"><label for=\"file-${x.id}\" class=\"secondary\" style=\"cursor:pointer;padding:0.3rem 0.6rem;border:1px solid #ccc;border-radius:4px;font-size:0.9rem\">📂 Scegli File</label><input type=\"file\" id=\"file-${x.id}\" multiple style=\"display:none\" onchange=\"document.getElementById('file-info-${x.id}').textContent = this.files.length + ' file'\" /><span id=\"file-info-${x.id}\" style=\"font-size:0.8rem;color:#666\"></span></div><div style=\"display:flex;gap:0.5rem;align-items:center\"><label for=\"folder-${x.id}\" class=\"secondary\" style=\"cursor:pointer;padding:0.3rem 0.6rem;border:1px solid #ccc;border-radius:4px;font-size:0.9rem\">📁 Scegli Cartella</label><input type=\"file\" id=\"folder-${x.id}\" multiple webkitdirectory style=\"display:none\" onchange=\"document.getElementById('file-info-${x.id}').textContent = this.files.length + ' file'\" /></div></div><select id=\"cat-${x.id}\"><option value=\"\">categoria</option><option>esterno</option><option>interno</option><option>cucina</option><option>bagno</option><option>pavimento</option><option>underbody</option><option>documento</option></select><select id=\"pselect-${x.id}\">${selector}</select><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"upload\">Carica foto</button><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"vision\">AI Vision</button><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"overlay\">Toggle difetti</button><select id=\"tone-${x.id}\" style=\"width:auto;padding:.3rem\"><option value=\"professionale\">Professionale</option><option value=\"emozionale\">Emozionale</option><option value=\"tecnico\">Tecnico</option></select><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"desc\">Gen. descrizione</button><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"price\">Stima prezzo</button><button data-id=\"${x.id}\" data-act=\"pdf\">Brochure PDF</button><button data-id=\"${x.id}\" data-act=\"label\">Stampa Prezzo</button><button data-id=\"${x.id}\" data-act=\"vetrina\">Vetrina</button><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"link\">Link pubblico</button><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"showdesc\">Storico descrizioni</button><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"revertlast\">Revert ultima</button><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"downloadjson\">Scarica JSON</button><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"duplicate\">Duplica</button><button data-id=\"${x.id}\" data-act=\"publish\">Pubblica</button></div><div class=\"row\" style=\"margin-top:.5rem\"><input placeholder=\"Titolo lavoro\" id=\"lav-${x.id}\"/><input type=\"number\" placeholder=\"Costo\" id=\"lavc-${x.id}\"/><button class=\"secondary\" data-id=\"${x.id}\" data-act=\"addwork\">Aggiungi lavoro</button>
-<button class=\"secondary\" style=\"margin-left:auto\" data-id=\"${x.id}\" data-act=\"quickstatus\">${x.stato_generale === 'da_sistemare' ? '🛠️ In Lavorazione' : '✅ Pronto'}</button>
-</div><div class=\"muted\" id=\"out-${x.id}\"></div>`;
-        c.appendChild(d);
-        (x.foto||[]).forEach(f => { if (Array.isArray(f.bboxes)) drawBboxes(`${x.id}-${f.id}`, f.bboxes); });
-      });
-      c.querySelectorAll('button').forEach(b => b.onclick = onAction);
-      const prev = el('prevPage'); const next = el('nextPage'); if(prev) prev.onclick = ()=>{ const p = Number(el('page').value)||1; if(p>1){ el('page').value = String(p-1); renderList(); } }; if(next) next.onclick = ()=>{ const p = Number(el('page').value)||1; const pages = meta.pages||1; if(p<pages){ el('page').value = String(p+1); renderList(); } };
-      const reset = el('resetFilters'); if(reset) reset.onclick = ()=>{ el('filterAnno').value=''; el('filterStato').value=''; el('page').value='1'; renderList(); };
-    }
-
-    async function onAction(e){
-      const id = e.target.dataset.id; const act = e.target.dataset.act; const out = el('out-'+id);
-      if (!window.overlayEnabled) window.overlayEnabled = {}; if (!(id in window.overlayEnabled)) window.overlayEnabled[id] = true;
-      if (act === 'upload'){
-        const fileInput = el('file-'+id);
-        const folderInput = el('folder-'+id);
-        let files = Array.from(fileInput?.files || []);
-        if (folderInput && folderInput.files.length) {
-            files = files.concat(Array.from(folderInput.files));
-        }
-        const cat = el('cat-'+id).value; 
-        
-        if (!files || files.length === 0){ out.textContent = 'Seleziona almeno un file'; return; }
-        
-        out.innerHTML = `<div class="spinner"></div> Caricamento di ${files.length} foto...`;
-        
-        const fd = new FormData(); 
-        for(let i=0; i<files.length; i++) {
-            fd.append('files', files[i]); // Note: 'files' must match upload.array('files')
-        }
-        if (cat) fd.append('categoria', cat);
-
-        try {
-            const r = await api('/api/roulottes/'+id+'/photos', { method: 'POST', body: fd }); 
-            if (r.ok) {
-                const j = await r.json(); 
-                out.textContent = `Completato! Caricate ${j.uploaded || 1} foto.`; 
-                toast('Caricamento completato'); 
-                renderList();
-            } else {
-                const err = await r.json();
-                out.textContent = 'Errore upload: ' + (err.details || err.error || r.statusText);
-            }
-        } catch (e) {
-            out.textContent = 'Errore di rete: ' + e.message;
-        }
-      }
-      if (act === 'vision'){
-        const x = await api('/api/roulottes/'+id); const item = await x.json(); const pid = el('pselect-'+id)?.value; const photo = (item.foto||[]).find(f=>f.id===pid) || (item.foto||[])[0]; const url = photo?.url; if (!url){ out.textContent='Nessuna foto'; return; }
-        out.innerHTML = '<div class="spinner"></div> Analisi AI in corso...';
-        const r = await api('/api/ai/vision', { method: 'POST', body: JSON.stringify({ url, roulotte_id: id, photo_id: photo.id, fallback: 'google' }) }); const j = await r.json(); 
-        out.innerHTML = '<strong>Analisi completata:</strong> '+(j.tags||[]).join(', ');
-        if (window.overlayEnabled[id]) drawBboxes(`${id}-${photo.id}`, j.bboxes||[]);
-        toast('Analisi AI completata');
-      }
-      if (act === 'overlay'){
-        window.overlayEnabled[id] = !window.overlayEnabled[id];
-        const pid = el('pselect-'+id)?.value; if (!pid) return; const cv = el('cv-'+id+'-'+pid); if (cv){ const ctx = cv.getContext('2d'); ctx.clearRect(0,0,cv.width,cv.height); }
-      }
-      if (act === 'desc'){
-        const x = await api('/api/roulottes/'+id); const item = await x.json(); const tone = el('tone-'+id)?.value || 'professionale'; 
-        out.innerHTML = '<div class="spinner"></div> Generazione in corso...';
-        const r = await api('/api/ai/generate-description', { method:'POST', body: JSON.stringify({ roulotte: item, tone, language: 'IT' }) }); 
-        const j = await r.json(); 
-        
-        // Save description text to detailed draft fields automatically
-        if(item.dettagli) {
-           item.dettagli.descrizione_testo = j.text;
-           await api('/api/roulottes/'+id, { method:'PUT', body: JSON.stringify(item) });
-        }
-        
-        out.textContent = j.text; 
-        await api('/api/roulottes/'+id+'/descrizioni', { method:'POST', body: JSON.stringify({ text: j.text, variant: j.variant }) });
-        toast('Descrizione generata e salvata');
-      }
-      if (act === 'price'){
-        const x = await api('/api/roulottes/'+id); const item = await x.json(); 
-        out.innerHTML = '<div class="spinner"></div> Calcolo stima...';
-        const r = await api('/api/ai/estimate-price', { method:'POST', body: JSON.stringify({ marca:item.marca, modello:item.modello, anno:item.anno, stato_generale:item.stato_generale, componenti:item.componenti, lavori:item.lavori, dettagli: item.dettagli }) }); 
-        const j = await r.json(); 
-        out.innerHTML = `
-        <div style="background:#f0fdf4;padding:1rem;border-radius:8px;border:1px solid #bbf7d0">
-          <div style="font-size:1.2rem;font-weight:bold;color:#166534">Consigliato: €${j.prezzo_consigliato}</div>
-          <div style="color:#15803d">Range: €${j.min} - €${j.max}</div>
-          <div style="color:#15803d;font-size:0.9rem">Ritiro commerciante: €${j.prezzo_ritiro}</div>
-          <ul style="margin:0.5rem 0 0 1rem;font-size:0.85rem;color:#14532d">${j.motivi.map(m=>`<li>${m}</li>`).join('')}</ul>
-        </div>`;
-      }
-      if (act === 'pdf'){
-        out.innerHTML = '<div class="spinner"></div> Generazione PDF...';
-        const r = await api('/api/pdf/generate/'+id, { method:'POST' }); const j = await r.json(); 
-        window.open(j.url, '_blank'); 
-        out.textContent = '';
-        toast('Brochure generata');
-      }
-      if (act === 'label'){
-        out.innerHTML = '<div class="spinner"></div> Generazione Etichetta...';
-        const r = await api('/api/pdf/label/'+id, { method:'POST' }); const j = await r.json(); 
-        window.open(j.url, '_blank'); 
-        out.textContent = '';
-        toast('Etichetta generata');
-      }
-      if (act === 'vetrina'){
-        window.open('/vetrina/'+id, '_blank');
-      }
-      if (act === 'link'){
-        const r = await api('/api/share/'+id, { method:'POST' }); const j = await r.json(); out.textContent = j.url; toast('Link pubblico creato');
-      }
-      if (act === 'showdesc'){
-        const r = await api('/api/roulottes/'+id+'/descrizioni'); const j = await r.json(); out.textContent = j.map(d=>`[${d.created_at}] ${d.variant}`).join('\n'); const sel = el('descver-'+id); sel.innerHTML = j.map(d=>`<option value="${d.version_id}">${d.variant} ${d.version_id}</option>`).join('');
-      }
-      if (act === 'revertdesc'){
-        const vid = el('descver-'+id)?.value; if(!vid){ out.textContent='Seleziona versione'; return; } const r = await api('/api/roulottes/'+id+'/descrizioni/revert', { method:'POST', body: JSON.stringify({ version_id: vid }) }); if(r.ok){ out.textContent='Revert eseguito'; }
-      }
-      if (act === 'savedesc'){
-        const text = el('desc-'+id).value; if(!text){ out.textContent='Inserisci descrizione'; return; }
-        const r = await api('/api/roulottes/'+id+'/descrizioni', { method:'POST', body: JSON.stringify({ text, variant:'base' }) }); const j = await r.json(); out.textContent='Descrizione salvata ('+j.version_id+')'; toast('Descrizione salvata');
-      }
-      if (act === 'publish'){
-        const r = await api('/api/roulottes/'+id+'/publish', { method:'POST' }); if (r.ok){ out.textContent='Pubblicata'; toast('Pubblicata'); renderList(); }
-      }
-      if (act === 'revertlast'){
-        const r0 = await api('/api/roulottes/'+id+'/descrizioni'); const hist = await r0.json(); const last = hist[hist.length-1]; if(!last){ out.textContent='Nessuna descrizione'; return; } const r1 = await api('/api/roulottes/'+id+'/descrizioni/revert', { method:'POST', body: JSON.stringify({ version_id: last.version_id }) }); if(r1.ok){ out.textContent='Revert ultima eseguito'; }
-      }
-      if (act === 'downloadjson'){
-        const x = await api('/api/roulottes/'+id); const item = await x.json(); const blob = new Blob([JSON.stringify(item,null,2)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `roulotte-${id}.json`; a.click(); out.textContent='JSON scaricato';
-      }
-      if (act === 'duplicate'){
-        const r = await api('/api/roulottes/'+id+'/duplicate', { method:'POST' }); const j = await r.json(); out.textContent='Duplicata: '+j.id; renderList();
-      }
-      if (act === 'addwork'){
-        const titolo = el('lav-'+id).value; const costo = Number(el('lavc-'+id).value); if(!titolo){ out.textContent='Titolo richiesto'; return; }
-        const r = await api('/api/roulottes/'+id+'/lavori', { method:'POST', body: JSON.stringify({ titolo, costo }) }); const j = await r.json(); out.textContent='Lavoro: '+j.titolo; toast('Lavoro aggiunto'); renderList();
-      }
-      if (act === 'quickstatus'){
-        const x = await api('/api/roulottes/'+id); const item = await x.json(); 
-        const next = item.stato_generale === 'da_sistemare' ? 'ottimo' : 'da_sistemare';
-        await api('/api/roulottes/'+id, { method:'PUT', body: JSON.stringify({ ...item, stato_generale: next }) });
-        toast('Stato aggiornato: '+next);
-        renderList();
-      }
-    }
-
-    async function renderDashboard(){
-      const r = await api('/api/dashboard'); if(!r.ok) return; const j = await r.json(); 
-      
-      // Main KPI Cards
-      el('dbCount').innerHTML = `
-        <div style="font-size:2rem;font-weight:bold">${j.count}</div>
-        <div class="muted">Veicoli totali</div>`;
-        
-      el('dbValore').innerHTML = `
-        <div style="font-size:2rem;font-weight:bold;color:var(--brand)">€${j.valore_inventario.toLocaleString('it-IT')}</div>
-        <div class="muted">Valore Inventario</div>`;
-        
-      el('dbWork').innerHTML = `
-        <div style="font-size:2rem;font-weight:bold;color:#f59e0b">${j.in_lavorazione}</div>
-        <div class="muted">In Lavorazione</div>`;
-        
-      el('dbPub').innerHTML = `
-        <div style="font-size:2rem;font-weight:bold;color:#10b981">${j.pubblicate}</div>
-        <div class="muted">Online</div>`;
-
-      // Remove old class logic if present to reset style
-      ['dbCount','dbValore','dbWork','dbPub'].forEach(id => {
-          el(id).className = 'card'; 
-          el(id).style.textAlign = 'center';
-      });
-      
-      // Add Charts Container if not exists
-      let charts = el('dbCharts');
-      if (!charts) {
-          charts = document.createElement('div');
-          charts.id = 'dbCharts';
-          charts.className = 'grid';
-          charts.style.marginTop = '1rem';
-          el('viewOperatore').querySelector('.grid').insertBefore(charts, el('viewOperatore').querySelector('.grid').children[1]);
-      }
-      
-      // Render Charts
-      charts.innerHTML = `
-        <div class="card">
-          <h3>Stato Veicoli</h3>
-          <div style="display:flex;align-items:flex-end;height:150px;gap:1rem;padding-top:1rem">
-            ${Object.entries(j.distribuzione_stato).map(([k,v]) => {
-                const h = j.count ? Math.max(5, (v/j.count)*100) : 0;
-                return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.5rem">
-                  <div style="width:100%;background:#e2e8f0;border-radius:4px;height:100%;display:flex;align-items:flex-end;overflow:hidden">
-                    <div style="width:100%;height:${h}%;background:var(--brand);transition:height 0.5s"></div>
-                  </div>
-                  <span style="font-size:0.8rem;text-transform:capitalize">${k.replace('_',' ')}</span>
-                  <strong style="font-size:0.9rem">${v}</strong>
-                </div>`;
-            }).join('')}
-          </div>
-        </div>
-        <div class="card">
-          <h3>Condizioni Commerciali</h3>
-          <div style="display:flex;align-items:center;height:150px;justify-content:center;gap:2rem">
-             <div style="text-align:center">
-                <div style="font-size:0.9rem;color:var(--muted)">Prezzo Medio</div>
-                <div style="font-size:1.5rem;font-weight:bold">€${j.prezzo_medio.toLocaleString('it-IT')}</div>
-             </div>
-             <div style="text-align:center">
-                <div style="font-size:0.9rem;color:var(--muted)">Costo Lavori Tot.</div>
-                <div style="font-size:1.5rem;font-weight:bold;color:#ef4444">€${j.costo_lavori_totale.toLocaleString('it-IT')}</div>
-             </div>
-          </div>
-        </div>
-      `;
-    }
-
-    async function renderAdminSelect(applyFilters){
-      const r = await api('/api/roulottes'); if(!r.ok) return; let items = await r.json();
-      if (applyFilters){
-        const amin = Number(el('afAnnoMin').value)||0; const amax = Number(el('afAnnoMax').value)||9999; const st = el('afStato').value; const tag = el('afTag').value?.toLowerCase();
-        items = items.filter(x => (!st || x.stato_generale===st) && (!x.anno || (x.anno>=amin && x.anno<=amax)) && (!tag || (x.foto||[]).some(f => (f.ai_tags||[]).some(t => t.toLowerCase().includes(tag)))));
-      }
-      const s = el('adminSelect'); s.innerHTML = items.map(x => `<option value="${x.id}">${x.marca||''} ${x.modello||''} ${x.anno||''} (${x.id})</option>`).join(''); if(items[0]){ const r = await api('/api/roulottes/'+items[0].id); const item = await r.json(); el('jsonEditor').value = JSON.stringify(item, null, 2); }
-      const bl = el('bulkList'); bl.innerHTML = items.map(x => `<label style="display:block"><input type="checkbox" value="${x.id}" /> ${x.marca||''} ${x.modello||''} ${x.anno||''} ${x.pubblico?'[pubblicata]':''}</label>`).join('');
-    }
-
-    async function bulkAction(act){
-      const ids = Array.from(el('bulkList').querySelectorAll('input[type=checkbox]')).filter(i=>i.checked).map(i=>i.value);
-      if (!ids.length){ el('adminOut').textContent='Seleziona elementi'; return; }
-      for (const id of ids){
-        if (act==='publish'){ await api('/api/roulottes/'+id+'/publish', { method:'POST' }); }
-        if (act==='unpublish'){ await api('/api/roulottes/'+id+'/unpublish', { method:'POST' }); }
-        if (act==='delete'){ await api('/api/roulottes/'+id, { method:'DELETE' }); }
-      }
-      el('adminOut').textContent='Operazione bulk eseguita su '+ids.length+' elementi';
-      renderList(); renderAdminSelect(true);
-    }
-
-    function drawBboxes(id, bboxes){
-      const img = el('img-'+id); const cv = el('cv-'+id);
-      if (!img || !cv) return;
-      const w = img.clientWidth; const h = img.clientHeight;
-      cv.width = w; cv.height = h; cv.style.width = w+'px'; cv.style.height = h+'px';
-      const ctx = cv.getContext('2d'); ctx.clearRect(0,0,w,h);
-      ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2; ctx.font = '12px system-ui'; ctx.fillStyle = 'rgba(239,68,68,.2)';
-      bboxes.forEach(b => {
-        const x = Math.max(0, Math.min(1, b.x||0)) * w;
-        const y = Math.max(0, Math.min(1, b.y||0)) * h;
-        const bw = Math.max(0, Math.min(1, b.w||0.001)) * w;
-        const bh = Math.max(0, Math.min(1, b.h||0.001)) * h;
-        ctx.fillRect(x, y, bw, bh);
-        ctx.strokeRect(x, y, bw, bh);
-        if (b.label) ctx.fillText(b.label, x+4, y+14);
-      });
-    }
-
-    function debounce(fn, wait){ let t; return function(){ clearTimeout(t); const args = arguments; t = setTimeout(()=>fn.apply(null, args), wait); } }
-    const autoSaveJson = debounce(async function(){ const id = el('adminSelect')?.value; if(!id) return; let obj; try{ obj = JSON.parse(el('jsonEditor')?.value||'{}'); }catch{ return; } await api('/api/roulottes/'+id, { method:'PUT', body: JSON.stringify(obj) }); }, 1200);
-    if (el('jsonEditor')) el('jsonEditor').addEventListener('input', autoSaveJson);
-
-    function saveDetailedDraft(){ const fields = ['d_marca','d_modello','d_anno','d_lunghezza','d_larghezza','d_posti','d_peso_vuoto','d_peso_complessivo','d_targa','d_numero_telaio','d_valutazione','d_lavori','d_prezzo','d_trattabile','d_disponibile','d_trasporto','d_prezzo_listino','d_garanzia','d_layout','d_condizioni_veicolo']; const data = {}; fields.forEach(f=>{ const elx = el(f); if(!elx) return; data[f] = elx.type==='checkbox'?elx.checked:elx.value; }); const acc = Array.from(document.querySelectorAll('.d_acc')).map(x=>({ v:x.value, c:x.checked })); localStorage.setItem('draft_detailed', JSON.stringify({ data, acc })); }
-    function restoreDetailedDraft(){ const raw = localStorage.getItem('draft_detailed'); if(!raw) return; try{ const { data, acc } = JSON.parse(raw); Object.entries(data||{}).forEach(([k,v])=>{ const elx = el(k); if(elx){ if(elx.type==='checkbox'){ elx.checked = v; } else { elx.value = v; } } }); (acc||[]).forEach(a=>{ const sel = Array.from(document.querySelectorAll('.d_acc')).find(x=>x.value===a.v); if(sel) sel.checked = a.c; }); }catch{} }
-    ['d_marca','d_modello','d_anno','d_lunghezza','d_larghezza','d_posti','d_peso_vuoto','d_peso_complessivo','d_targa','d_numero_telaio','d_valutazione','d_lavori','d_prezzo','d_trattabile','d_disponibile','d_trasporto','d_prezzo_listino','d_garanzia','d_layout','d_condizioni_veicolo'].forEach(id=>{ const elx = el(id); if(elx){ elx.addEventListener('input', saveDetailedDraft); elx.addEventListener('change', saveDetailedDraft); } }); Array.from(document.querySelectorAll('.d_acc')).forEach(x=>{ x.addEventListener('change', saveDetailedDraft); }); restoreDetailedDraft();
-
-    renderList(); renderDashboard();
-  </script>
+  <script src="/app.js"></script>
 </body>
 </html>

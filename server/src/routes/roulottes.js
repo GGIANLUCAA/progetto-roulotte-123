@@ -12,7 +12,7 @@ import { appendLog } from "../services/logs.js";
 
 const router = Router();
 
-const uploadDir = path.join(process.cwd(), "server", "uploads");
+const uploadDir = path.join(process.cwd(), "server", "public", "uploads");
 fs.mkdirSync(uploadDir, { recursive: true });
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),

@@ -1,0 +1,293 @@
+/* 
+================================================================================
+   NUOVO DESIGN SYSTEM PER ROULOTTE PRO
+   Autore: Gemini AI Designer
+   Versione: 1.0
+================================================================================
+*/
+
+/* --- Variabili Globali (Design Tokens) --- */
+:root {
+    /* Palette Colori */
+    --color-background: #f8f9fa; /* Sfondo leggermente grigio */
+    --color-surface: #ffffff;    /* Superfici principali (card, header) */
+    --color-text-primary: #212529; /* Testo principale, scuro e leggibile */
+    --color-text-secondary: #6c757d;/* Testo secondario, per dettagli */
+    --color-border: #dee2e6;      /* Bordi sottili e non invasivi */
+    
+    --color-brand: #007bff;        /* Colore principale del brand (blu vibrante) */
+    --color-brand-hover: #0056b3;  /* Versione più scura per hover */
+    --color-brand-contrast: #ffffff; /* Testo sui pulsanti brand */
+
+    --color-danger: #dc3545;       /* Rosso per azioni distruttive */
+    --color-success: #28a745;      /* Verde per conferme */
+
+    /* Tipografia */
+    --font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+
+    /* Spaziature e Raggi */
+    --spacing-unit: 8px;
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 16px;
+
+    /* Ombre */
+    --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Reset e Stili di Base --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: var(--font-size-base);
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family-base);
+    line-height: var(--line-height-base);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+a {
+    color: var(--color-brand);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--color-brand-hover);
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* --- Layout Principale --- */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: calc(var(--spacing-unit) * 4);
+}
+
+header {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-small);
+}
+
+header .brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* --- Componenti UI --- */
+.card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-large);
+    padding: calc(var(--spacing-unit) * 3);
+    box-shadow: var(--shadow-medium);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-large);
+}
+
+.section-title {
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-unit);
+    margin-bottom: var(--spacing-unit);
+    color: var(--color-brand);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.grid {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 3);
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+/* --- Pulsanti --- */
+.btn {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+    font-size: 0.95rem;
+    border-radius: var(--border-radius-medium);
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--color-brand);
+    color: var(--color-brand-contrast);
+    border-color: var(--color-brand);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-brand-hover);
+    border-color: var(--color-brand-hover);
+}
+
+.btn-secondary {
+    background-color: var(--color-surface);
+    color: var(--color-brand);
+    border-color: var(--color-border);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+}
+
+.btn-sm {
+    padding: calc(var(--spacing-unit) * 0.5) var(--spacing-unit);
+    font-size: 0.8rem;
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: var(--color-brand-contrast);
+    border-color: var(--color-danger);
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Un rosso più scuro per l'hover */
+    border-color: #bd2130;
+}
+
+/* --- Form --- */
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.5);
+    font-family: var(--font-family-base);
+    font-size: 0.95rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-medium);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.json-editor {
+    width: 100%;
+    height: 200px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-unit);
+    font-family: monospace;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--spacing-unit);
+    margin-top: var(--spacing-unit);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-medium);
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+}
+
+/* --- Utility --- */
+.hidden {
+    display: none !important;
+}
+
+.text-danger {
+    color: var(--color-danger);
+}
+
+.col-span-full {
+    grid-column: 1 / -1;
+}
+
+.grid-cols-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.mt-1 {
+    margin-top: var(--spacing-unit);
+}
+
+.w-full {
+    width: 100%;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.gap-2 {
+    gap: var(--spacing-unit);
+}
+
+.muted {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+.pill {
+    display: inline-block;
+    padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit) * 1.5);
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 999px;
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.mt-2 {
+    margin-top: calc(var(--spacing-unit) * 2);
+}
