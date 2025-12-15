@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "archiver": "^7.0.1"
+  },
+  "scripts": {
+    "start": "node server/src/index.js"
   }
 }
